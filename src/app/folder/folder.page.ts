@@ -5,7 +5,7 @@ import { ObjectService } from '../services/object.service';
 interface parks {
   title: string;
   img: string;
-  type:number;
+  type:string;
   position:{
     lat: number,
     lng: number,
@@ -32,7 +32,7 @@ export class FolderPage implements OnInit {
       this.parks =[{
         title: 'Simon Bolivar',
         img: 'https://bogota.gov.co/sites/default/files/styles/1050px/public/field/image/simon-bolivar.jpg',
-        type: 1,
+        type: 'BioSitios',
         position: {
           lat: 4.658430099,
           lng: -74.093772888,
@@ -42,7 +42,7 @@ export class FolderPage implements OnInit {
       {
         title: 'Parque de los Novios',
         img: 'https://www.idrd.gov.co/sitio/idrd/sites/default/files/imagenes/PARQUE%20LOS%20NOVIOS%20CUMPLE%2040%20AN%cc%83OS.jpg',
-        type: 1,
+        type: 'BioSitios',
         position: {
           lat: 4.655799866, 
           lng: -74.081657410,
@@ -53,7 +53,7 @@ export class FolderPage implements OnInit {
       {
         title: 'Restaurante Tramonti',
         img: 'http://www.bogotatravelguide.com/Imagenes/restaurante-tramonti-2b.jpg',
-        type: 2,
+        type: 'BioRestaurantes',
         position: {
           lat: 4.6695967,
           lng: -74.0388919
@@ -64,7 +64,7 @@ export class FolderPage implements OnInit {
       {
         title: 'Quebrada la vieja',
         img: 'https://www.eltiempo.com/files/article_main/uploads/2018/04/30/5ae755baebaab.jpeg',
-        type: 3,
+        type: 'BioSenderos',
         position: {
           lat: 4.6501338,
           lng: -74.050746,

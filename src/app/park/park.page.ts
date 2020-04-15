@@ -1,13 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router,Params } from '@angular/router';
 import { ObjectService } from '../services/object.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 declare var google;
-
-
-interface marker{
-    lat: number,
-    lng: number,
-};
 
 @Component({
   selector: 'app-park',
@@ -17,17 +12,25 @@ interface marker{
 export class ParkPage implements OnInit {
 
   map = null;
+  directionsService = new google.maps.DirectionsService();
+  directionsDisplay = new google.maps.DirectionsRenderer();
+
+  origin = { lat: 4.6445625, lng: -74.0746365 };
+  destination = { lat: 4.658430099, lng: -74.093772888 };
+
   public marker:any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: Router,
-    private objectService: ObjectService
+    private objectService: ObjectService,
+    
+    
 ) { }
+
 
   ngOnInit() {
     this.objectService.$getObjectSource.subscribe(data => {
-      console.log(data)
       this.marker = data;
     }).unsubscribe(); 
 
@@ -41,13 +44,18 @@ export class ParkPage implements OnInit {
     const myLatLng = {lat: 4.658383846282959, lng: -74.09394073486328};
     // create map
     this.map = new google.maps.Map(mapEle, {
-      center: myLatLng,
+      center: this.marker,
       zoom: 12
     });
   
+    this.directionsDisplay.setMap(this.map);
+    //this.directionsDisplay.setPanel(indicatorsEle);
+
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
-      this.addMarker();
+      
       mapEle.classList.add('show-map');
+      this.addMarker();
+      //this.calculateRoute();
     });
   }
 
@@ -56,6 +64,20 @@ export class ParkPage implements OnInit {
       position: this.marker,
       map: this.map,
       title: 'Punto'
+    });
+  }
+
+  private calculateRoute(){
+    this.directionsService.route({
+      origin: this.origin,
+      destination: this.destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+    }, (response, status)  => {
+      if (status === google.maps.DirectionsStatus.OK) {
+        this.directionsDisplay.setDirections(response);
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
     });
   }
 
