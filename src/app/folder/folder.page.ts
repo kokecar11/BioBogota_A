@@ -13,12 +13,6 @@ interface parks {
   
 }
 
-/*interface position{
-    lat: number,
-    lng: number,
-
-};*/
-
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.page.html',
@@ -83,17 +77,6 @@ export class FolderPage implements OnInit {
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
-
-
- /* locationPark = function (lat2, lng2) {
-    this.positon = {
-      lat: lat2,
-      lng: lng2,
-    }
-    this.objectService.sendObjectSource(this.position);
-    this.route.navigate(['/park']);
-  };*/
-
 
   locationPark(lat2:number ,lng2:number){
     this.position = {lat: lat2, lng:lng2};

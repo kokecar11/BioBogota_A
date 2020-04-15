@@ -1,5 +1,7 @@
 {
   "name": "BioBogota_A",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
