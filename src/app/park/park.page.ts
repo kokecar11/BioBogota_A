@@ -24,9 +24,7 @@ export class ParkPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private objectService: ObjectService,
-    
-    
-) { }
+    ) { }
 
 
   ngOnInit() {
@@ -40,8 +38,6 @@ export class ParkPage implements OnInit {
   loadMap() {
     // create a new map by passing HTMLElement
     const mapEle: HTMLElement = document.getElementById('map');
-    // create LatLng object
-    const myLatLng = {lat: 4.658383846282959, lng: -74.09394073486328};
     // create map
     this.map = new google.maps.Map(mapEle, {
       center: this.marker,
