@@ -84,5 +84,8 @@ export class FolderPage implements OnInit {
     this.route.navigate(['/park']);
     
   }
+  camara(){
+    this.route.navigate(['/camera']);
+  }
 
 }

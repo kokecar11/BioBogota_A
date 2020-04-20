@@ -17,12 +17,14 @@
    </ion-card-header>
    <ion-card-content>
      <img src="{{ park.img }}"/>
-     {{park.position.lat}}
-     {{park.position.lng}}
    </ion-card-content>
    <ion-button (click)="locationPark(park.position.lat,park.position.lng)" color="primary" >
      <ion-icon name="pin"></ion-icon> Como llegar
    </ion-button>
+
+   <ion-button (click)="camara()" color="primary" >
+    <ion-icon name="pin"></ion-icon> tomar foto
+  </ion-button>
   </ion-card>
  </ion-item>
 </div>

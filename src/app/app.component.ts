@@ -28,12 +28,12 @@ export class AppComponent implements OnInit {
       icon: 'heart'
     },
     {
-      title: 'Login',
-      url: '/login',
-      icon: 'archive'
+      title: 'Camara',
+      url: '/camera',
+      icon: 'camera'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public labels = [];
 
   constructor(
     private platform: Platform,

@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/folder/BioSitios',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {
@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'park',
     loadChildren: () => import('./park/park.module').then( m => m.ParkPageModule)
+  },
+  {
+    path: 'camera',
+    loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule)
   }
 ];
 

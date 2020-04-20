@@ -45,7 +45,7 @@ export class ParkPage implements OnInit {
     // create map
     this.map = new google.maps.Map(mapEle, {
       center: this.marker,
-      zoom: 12
+      zoom: 14
     });
   
     this.directionsDisplay.setMap(this.map);
@@ -70,7 +70,7 @@ export class ParkPage implements OnInit {
   private calculateRoute(){
     this.directionsService.route({
       origin: this.origin,
-      destination: this.destination,
+      destination: this.marker,
       travelMode: google.maps.TravelMode.DRIVING,
     }, (response, status)  => {
       if (status === google.maps.DirectionsStatus.OK) {
