@@ -18,13 +18,21 @@
    <ion-card-content>
      <img src="{{ park.img }}"/>
    </ion-card-content>
-   <ion-button (click)="locationPark(park.position.lat,park.position.lng)" color="primary" >
-     <ion-icon name="pin"></ion-icon> Como llegar
-   </ion-button>
+   <div class="centrado">
+      <ion-button (click)="locationPark(park.position.lat,park.position.lng)" color="primary" >
+        <ion-icon name="pin"></ion-icon>
+      </ion-button>
 
-   <ion-button (click)="camara()" color="primary" >
-    <ion-icon name="pin"></ion-icon> tomar foto
-  </ion-button>
+      <ion-button (click)="camara()" color="primary" >
+        <ion-icon name="camera"></ion-icon> 
+      </ion-button>
+      <ion-button (click)="fauna(park.title,park.fauna.name,park.fauna.tipo,park.fauna.desc)" color="primary" >
+        <ion-icon name="paw"></ion-icon> 
+      </ion-button>
+      <ion-button (click)="flora(park.title,park.flora.name,park.flora.tipo,park.flora.desc)" color="primary" >
+        <ion-icon name="rose"></ion-icon> 
+      </ion-button>
+    </div>
   </ion-card>
  </ion-item>
 </div>

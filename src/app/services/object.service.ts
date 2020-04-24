@@ -7,10 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 export class ObjectService {
 
   private objectSource = new BehaviorSubject<{}>({});
-  //private listSoruce = new BehaviorSubject<any[]>({});
+  private listSoruce = new BehaviorSubject<any[]>([]);
 
   $getObjectSource = this.objectSource.asObservable();
-  //$getListSource = this.listSoruce.asObservable();
+  $getListSource = this.listSoruce.asObservable();
   constructor() { }
 
 
@@ -18,8 +18,8 @@ export class ObjectService {
     this.objectSource.next(data);
   }
 
-  /*sendListSource(list:any[]){
+  sendListSource(list:any[]){
     this.listSoruce.next(list);
-  }*/
+  }
 
 }

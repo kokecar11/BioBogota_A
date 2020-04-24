@@ -10,6 +10,17 @@ interface parks {
     lat: number,
     lng: number,
   };
+  fauna:{
+    name:string,
+    tipo:string,
+    desc:string,
+
+  };
+  flora:{
+    name:string,
+    tipo:string,
+    desc:string,
+  };
   
 }
 
@@ -23,6 +34,14 @@ export class FolderPage implements OnInit {
 
   public parks: parks[];
   position: {lat: number,lng: number};
+  fauna1: {name:string, tipo:string, desc:string};
+  parkF:{
+    title: string, 
+    fauna:{
+      name: string,
+      tipo: string,
+      desc: string,
+    } };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,6 +55,17 @@ export class FolderPage implements OnInit {
         position: {
           lat: 4.658430099,
           lng: -74.093772888,
+        },
+        fauna:{
+          name:'Pajaro 1',
+          tipo:'Ave',
+          desc:'Ave encontrada por aqui'
+        },
+        flora:{
+          name:'Flor 1',
+          tipo:'Flor',
+          desc:'Flor encontrada por aqui'
+
         }
     
       },
@@ -46,10 +76,20 @@ export class FolderPage implements OnInit {
         position: {
           lat: 4.655799866, 
           lng: -74.081657410,
+        },
+        fauna:{
+          name:'Pajaro 2',
+          tipo:'Ave',
+          desc:'Ave encontrada por aqui'
+        },
+        flora:{
+          name:'Flor 2',
+          tipo:'Flor',
+          desc:'Flor encontrada por aqui'
+
         }
     
-      }
-      ,
+      },
       {
         title: 'Restaurante Tramonti',
         img: 'http://www.bogotatravelguide.com/Imagenes/restaurante-tramonti-2b.jpg',
@@ -57,10 +97,20 @@ export class FolderPage implements OnInit {
         position: {
           lat: 4.6695967,
           lng: -74.0388919
+        },
+        fauna:{
+          name:'Pajaro 3',
+          tipo:'Ave',
+          desc:'Ave encontrada por aqui'
+        },
+        flora:{
+          name:'Flor 3',
+          tipo:'Flor',
+          desc:'Flor encontrada por aqui'
+
         }
     
-      }
-      ,
+      },
       {
         title: 'Quebrada la vieja',
         img: 'https://www.eltiempo.com/files/article_main/uploads/2018/04/30/5ae755baebaab.jpeg',
@@ -68,6 +118,17 @@ export class FolderPage implements OnInit {
         position: {
           lat: 4.6501338,
           lng: -74.050746,
+        },
+        fauna:{
+          name:'Pajaro 4',
+          tipo:'Ave',
+          desc:'Ave encontrada por aqui'
+        },
+        flora:{
+          name:'Flor 4',
+          tipo:'Flor',
+          desc:'Flor encontrada por aqui'
+
         }
 
       }];
@@ -87,5 +148,34 @@ export class FolderPage implements OnInit {
   camara(){
     this.route.navigate(['/camera']);
   }
+  fauna(title: string, name:string, tipo:string, desc:string){
+
+    this.parkF= {title: title, 
+    fauna:{
+      name: name,
+      tipo: tipo,
+      desc: desc,
+    } };
+
+    this.fauna1 = {name: name, tipo: tipo, desc:desc};
+    this.objectService.sendObjectSource(this.parkF);
+    this.route.navigate(['/fauna']);
+  }
+
+
+  flora(title: string, name:string, tipo:string, desc:string){
+
+    this.parkF= {title: title, 
+    fauna:{
+      name: name,
+      tipo: tipo,
+      desc: desc,
+    } };
+
+    this.fauna1 = {name: name, tipo: tipo, desc:desc};
+    this.objectService.sendObjectSource(this.parkF);
+    this.route.navigate(['/flora']);
+  }
+
 
 }

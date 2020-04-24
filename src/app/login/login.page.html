@@ -1,25 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title color="primary">Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
  <div class="container">
-  <ion-item>
-    <ion-label position="floating">Correo Electronico</ion-label>
-    <ion-input type="email" [(ngModel)]="email"></ion-input>
-  </ion-item>
+   <br>
+    <ion-item>
+      <ion-label position="floating">Correo Electronico</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <br>
 
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <br>
+    <br>
 
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password" [(ngModel)]="password"></ion-input>
-  </ion-item>
-  <br>
-  <br>
-  <ion-button (click)="login()" expand="full" color="primary" mode="ios">INICIAR SESIÓN</ion-button>
-  <p>Eres nuevo ? <a href="/register">Registrate!</a></p>
-
+    <div class="centrado">
+      <ion-button (click)="login()"  size="default" color="danger" mode="ios"><ion-icon name="logo-google"></ion-icon></ion-button>
+    
+      <ion-button (click)="login()" size="default" color="primary" mode="ios">Iniciar Sesión</ion-button>
+      <p>Eres nuevo ? <a href="/register">Registrate!</a></p>
+    </div>
  </div>
 </ion-content>

@@ -26,6 +26,14 @@ const routes: Routes = [
   {
     path: 'camera',
     loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule)
+  },
+  {
+    path: 'fauna',
+    loadChildren: () => import('./fauna/fauna.module').then( m => m.FaunaPageModule)
+  },
+  {
+    path: 'flora',
+    loadChildren: () => import('./flora/flora.module').then( m => m.FloraPageModule)
   }
 ];
 

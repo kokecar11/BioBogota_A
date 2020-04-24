@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+
   public selectedIndex = 0;
   public appPages = [
     {
@@ -28,9 +31,9 @@ export class AppComponent implements OnInit {
       icon: 'heart'
     },
     {
-      title: 'Camara',
+      title: 'Cerrar Sesión',
       url: '/camera',
-      icon: 'camera'
+      icon: 'power'
     }
   ];
   public labels = [];
@@ -38,7 +41,8 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public afAuth: AngularFireAuth,
   ) {
     this.initializeApp();
   }
