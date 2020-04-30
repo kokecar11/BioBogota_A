@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router,Params } from '@angular/router';
 import { ObjectService } from '../services/object.service';
+import { ParksService} from '../services/parks.service';
 
 interface parks {
   title: string;
@@ -32,7 +33,7 @@ interface parks {
 export class FolderPage implements OnInit {
   public folder: string;
 
-  public parks: parks[];
+  public parks: any = [];
   position: {lat: number,lng: number};
   fauna1: {name:string, tipo:string, desc:string};
   parkF:{
@@ -46,97 +47,20 @@ export class FolderPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     public route: Router,
-    private objectService : ObjectService) {
-    
-      this.parks =[{
-        title: 'Simon Bolivar',
-        img: 'https://bogota.gov.co/sites/default/files/styles/1050px/public/field/image/simon-bolivar.jpg',
-        type: 'BioSitios',
-        position: {
-          lat: 4.658430099,
-          lng: -74.093772888,
-        },
-        fauna:{
-          name:'Pajaro 1',
-          tipo:'Ave',
-          desc:'Ave encontrada por aqui'
-        },
-        flora:{
-          name:'Flor 1',
-          tipo:'Flor',
-          desc:'Flor encontrada por aqui'
-
-        }
-    
-      },
-      {
-        title: 'Parque de los Novios',
-        img: 'https://www.idrd.gov.co/sitio/idrd/sites/default/files/imagenes/PARQUE%20LOS%20NOVIOS%20CUMPLE%2040%20AN%cc%83OS.jpg',
-        type: 'BioSitios',
-        position: {
-          lat: 4.655799866, 
-          lng: -74.081657410,
-        },
-        fauna:{
-          name:'Pajaro 2',
-          tipo:'Ave',
-          desc:'Ave encontrada por aqui'
-        },
-        flora:{
-          name:'Flor 2',
-          tipo:'Flor',
-          desc:'Flor encontrada por aqui'
-
-        }
-    
-      },
-      {
-        title: 'Restaurante Tramonti',
-        img: 'http://www.bogotatravelguide.com/Imagenes/restaurante-tramonti-2b.jpg',
-        type: 'BioRestaurantes',
-        position: {
-          lat: 4.6695967,
-          lng: -74.0388919
-        },
-        fauna:{
-          name:'Pajaro 3',
-          tipo:'Ave',
-          desc:'Ave encontrada por aqui'
-        },
-        flora:{
-          name:'Flor 3',
-          tipo:'Flor',
-          desc:'Flor encontrada por aqui'
-
-        }
-    
-      },
-      {
-        title: 'Quebrada la vieja',
-        img: 'https://www.eltiempo.com/files/article_main/uploads/2018/04/30/5ae755baebaab.jpeg',
-        type: 'BioSenderos',
-        position: {
-          lat: 4.6501338,
-          lng: -74.050746,
-        },
-        fauna:{
-          name:'Pajaro 4',
-          tipo:'Ave',
-          desc:'Ave encontrada por aqui'
-        },
-        flora:{
-          name:'Flor 4',
-          tipo:'Flor',
-          desc:'Flor encontrada por aqui'
-
-        }
-
-      }];
-
-     }
+    private objectService : ObjectService,
+    public parkService : ParksService,
+    ) { }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+    this.parkService.getParks().subscribe(parkss => {
+      
+      parkss.map(park => {
+        const data : parks = park.payload.doc.data() as parks;
+        this.parks.push(data);
+
+      } )
+    })
   }
 
   locationPark(lat2:number ,lng2:number){

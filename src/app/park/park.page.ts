@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router,Params } from '@angular/router';
 import { ObjectService } from '../services/object.service';
+
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 declare var google;
 
 @Component({
@@ -24,6 +26,7 @@ export class ParkPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private objectService: ObjectService,
+    
     ) { }
 
 
