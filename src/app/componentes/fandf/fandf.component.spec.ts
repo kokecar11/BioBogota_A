@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FaunaPage } from './fauna.page';
+import { FandfComponent } from './fandf.component';
 
-describe('FaunaPage', () => {
-  let component: FaunaPage;
-  let fixture: ComponentFixture<FaunaPage>;
+describe('FandfComponent', () => {
+  let component: FandfComponent;
+  let fixture: ComponentFixture<FandfComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FaunaPage ],
+      declarations: [ FandfComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FaunaPage);
+    fixture = TestBed.createComponent(FandfComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/folder"></ion-back-button>
-    </ion-buttons>
+    <ion-button (click)="backs()" slot="start" fill="clear">
+      <ion-icon  name="arrow-back"></ion-icon>
+    </ion-button>
     <ion-title>Fauna</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,12 +12,12 @@
     <ion-item >
      <ion-card >
       <ion-card-header>
-        <ion-card-subtitle>Fauna de {{fauna.title}}</ion-card-subtitle>
-        <ion-card-title>{{fauna.fauna.name}}</ion-card-title>
+        <ion-card-subtitle>Fauna de {{title}}</ion-card-subtitle>
+        <ion-card-title>{{nameF}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <img src="https://concepto.de/wp-content/uploads/2018/10/flora-y-fauna1-e1538585100273.jpg"/>
-        <p>{{fauna.fauna.desc}}</p>
+        <p></p>
       </ion-card-content>
       <ion-button color="primary" >
         <ion-icon name="pin"></ion-icon>

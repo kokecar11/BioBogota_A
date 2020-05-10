@@ -5,11 +5,11 @@
         <ion-list id="inbox-list">
           <ion-list-header>BioBogotá</ion-list-header>
           <ion-note>
-            <ion-chip>
+            <ion-chip *ngIf ="afAuth.user | async as user"> 
               <ion-avatar>
                 <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
               </ion-avatar>
-              <ion-label>koke@koke.com</ion-label>
+              <ion-label >{{ user.email }}</ion-label>
             </ion-chip>
           </ion-note>
 
@@ -22,12 +22,15 @@
         </ion-list>
 
         <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
+          <ion-list-header>Mi Perfil</ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
+          <ion-button (click)="OnLogout()" color="danger" >
+            <ion-icon name="power"></ion-icon> 
+          </ion-button>
         </ion-list>
       </ion-content>
     </ion-menu>

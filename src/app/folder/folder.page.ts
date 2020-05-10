@@ -1,29 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router,Params } from '@angular/router';
 import { ObjectService } from '../services/object.service';
-import { ParksService} from '../services/parks.service';
+import { ParksService, parks} from '../services/parks.service';
+import { map } from "rxjs/operators";
+import { ModalController } from '@ionic/angular';
+import { FloraComponent } from '../componentes/flora/flora.component';
+import { FaunaComponent } from '../componentes/fauna/fauna.component';
+import { ParkComponent } from '../componentes/Bioparks/park/park.component';
 
-interface parks {
-  title: string;
-  img: string;
-  type:string;
-  position:{
-    lat: number,
-    lng: number,
-  };
-  fauna:{
-    name:string,
-    tipo:string,
-    desc:string,
 
-  };
-  flora:{
-    name:string,
-    tipo:string,
-    desc:string,
-  };
-  
-}
 
 @Component({
   selector: 'app-folder',
@@ -35,31 +20,21 @@ export class FolderPage implements OnInit {
 
   public parks: any = [];
   position: {lat: number,lng: number};
-  fauna1: {name:string, tipo:string, desc:string};
-  parkF:{
-    title: string, 
-    fauna:{
-      name: string,
-      tipo: string,
-      desc: string,
-    } };
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public route: Router,
     private objectService : ObjectService,
     public parkService : ParksService,
+    private modal : ModalController,
     ) { }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
     this.parkService.getParks().subscribe(parkss => {
-      
-      parkss.map(park => {
-        const data : parks = park.payload.doc.data() as parks;
-        this.parks.push(data);
 
-      } )
+      this.parks = parkss;
+      
     })
   }
 
@@ -72,33 +47,34 @@ export class FolderPage implements OnInit {
   camara(){
     this.route.navigate(['/camera']);
   }
-  fauna(title: string, name:string, tipo:string, desc:string){
 
-    this.parkF= {title: title, 
-    fauna:{
-      name: name,
-      tipo: tipo,
-      desc: desc,
-    } };
+  OnFauna (park){
+    this.modal.create({
+      component: FaunaComponent,
+      componentProps : {
+        title : park.title,
+        nameF : park.fauna.name
+      }
+    }).then((modal) => modal.present())
 
-    this.fauna1 = {name: name, tipo: tipo, desc:desc};
-    this.objectService.sendObjectSource(this.parkF);
-    this.route.navigate(['/fauna']);
   }
 
+  OnFlora (park){
+    this.modal.create({
+      component: FloraComponent,
+      componentProps : {
+        title : park.title,
+        nameF : park.flora.name
+      }
+    }).then((modal) => modal.present())
 
-  flora(title: string, name:string, tipo:string, desc:string){
+  }
 
-    this.parkF= {title: title, 
-    fauna:{
-      name: name,
-      tipo: tipo,
-      desc: desc,
-    } };
+  OnCreatePark(){
+    this.modal.create({
+      component: ParkComponent,
+    }).then((modal) => modal.present())
 
-    this.fauna1 = {name: name, tipo: tipo, desc:desc};
-    this.objectService.sendObjectSource(this.parkF);
-    this.route.navigate(['/flora']);
   }
 
 

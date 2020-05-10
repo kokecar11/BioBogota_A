@@ -7,25 +7,32 @@
 <ion-content>
  <div class="container">
 
+  <br>
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input type="text" [(ngModel)]="name"></ion-input>
+  </ion-item>
+
+  <br>
   <ion-item>
     <ion-label position="floating">Correo Electronico</ion-label>
     <ion-input type="email" [(ngModel)]="email"></ion-input>
   </ion-item>
 
-
+  <br>
   <ion-item>
     <ion-label position="floating">Contraseña</ion-label>
     <ion-input type="password" [(ngModel)]="password"></ion-input>
   </ion-item>
-
+  <br>
   <ion-item>
     <ion-label position="floating">Confirmación de contraseña</ion-label>
     <ion-input type="password" [(ngModel)]="cpassword"></ion-input>
   </ion-item>
   <br>
   <br>
-  <ion-button (click)="register()" expand="full" color="primary" mode="ios">REGISTRARSE</ion-button>
+  <ion-button (click)="OnRegister()" expand="full" color="primary" mode="ios">REGISTRARSE</ion-button>
 
-  <p>Tienes cuenta?<a href="/login"> Inicia Sesión!</a></p>
+  <p text-center>Tienes cuenta?<a href="/login"> Inicia Sesión!</a></p>
  </div>
 </ion-content>
