@@ -33,12 +33,21 @@ export class AppComponent implements OnInit {
       icon: 'heart'
     },
     {
+      title: 'Mis BioSitios',
+      url: '/BioSitios',
+      icon: 'heart'
+    },
+    {
       title: 'Camara',
       url: '/camera',
       icon: 'camera'
     }
   ];
-  public labels = [];
+  public labels = [{
+    title: 'Mis Biositios',
+    url: '/perfil/BioSitios',
+    icon: 'power'
+  }];
 
  
 

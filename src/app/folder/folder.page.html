@@ -12,6 +12,8 @@
 
 <ion-content [fullscreen]="true">
 
+  <div class="container" *ngIf ="afAuth.user | async as user">
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="ellipsis-vertical"></ion-icon>
@@ -20,12 +22,13 @@
       <ion-fab-button (click)="OnCreatePark()"><ion-icon name="add"></ion-icon ></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
+  
 
 <div *ngFor="let park of parks">
  <ion-item *ngIf="park.type == folder">
   <ion-card >
    <ion-card-header>
-     <ion-card-subtitle>{{ folder }}</ion-card-subtitle>
+     <ion-card-subtitle >BioSitio Posteado por {{park.uid}}</ion-card-subtitle>
      <ion-card-title>{{ park.title }}</ion-card-title>
    </ion-card-header>
    <ion-card-content>
@@ -48,5 +51,6 @@
     </div>
   </ion-card>
  </ion-item>
+</div>
 </div>
 </ion-content>

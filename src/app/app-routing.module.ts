@@ -29,6 +29,10 @@ const routes: Routes = [
     path: 'register',canActivate : [NologinGuard] ,
     loadChildren: () => import('./componentes/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'biositios',
+    loadChildren: () => import('./pages/biositios/biositios.module').then( m => m.BiositiosPageModule)
+  },
 ];
 
 @NgModule({

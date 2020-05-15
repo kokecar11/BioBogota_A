@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router,Params } from '@angular/router';
 import { ObjectService } from '../services/object.service';
-import { ParksService, parks} from '../services/parks.service';
+import { ParksService} from '../services/parks.service';
 import { map } from "rxjs/operators";
 import { ModalController } from '@ionic/angular';
 import { FloraComponent } from '../componentes/flora/flora.component';
 import { FaunaComponent } from '../componentes/fauna/fauna.component';
 import { ParkComponent } from '../componentes/Bioparks/park/park.component';
-
+import { AngularFireAuth } from '@angular/fire/auth';
 
 
 @Component({
@@ -24,6 +24,7 @@ export class FolderPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     public route: Router,
+    private afAuth : AngularFireAuth,
     private objectService : ObjectService,
     public parkService : ParksService,
     private modal : ModalController,

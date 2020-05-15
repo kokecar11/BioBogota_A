@@ -18,6 +18,7 @@ import { FloraComponent } from './componentes/flora/flora.component';
 import { FaunaComponent } from './componentes/fauna/fauna.component';
 import { ParkComponent } from './componentes/Bioparks/park/park.component';
 import { FormsModule } from '@angular/forms';
+import { GooglePlus } from "@ionic-native/google-plus/ngx";
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
+    GooglePlus,
     StatusBar,
     SplashScreen,
     Camera,

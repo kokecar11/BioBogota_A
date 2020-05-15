@@ -8,12 +8,17 @@
 </ion-header>
 
 <ion-content>
- <div class="container">
-
+ <div class="container" *ngIf ="afAuth.user | async as user">
+  
   <br>
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
       <ion-input type="text" [(ngModel)]="title" ></ion-input>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea [(ngModel)]="desc" placeholder="Escriba la descripcion del lugar..."></ion-textarea>
     </ion-item>
     <br>
     <ion-item>
@@ -34,12 +39,15 @@
    
     <ion-item>
       <ion-label>BioSitios</ion-label>
-      <ion-select placeholder="Select One">
+      <ion-select [(ngModel)]="type" placeholder="Seleccion un BioSitio">
         <ion-select-option value="BioParques">BioParque</ion-select-option>
         <ion-select-option value="BioRestaurantes">BioRestaurante</ion-select-option>
         <ion-select-option value="BioSenderos">BioSendero</ion-select-option>
       </ion-select>
     </ion-item>
+ 
+
+    <ion-button (click)="OnSavePark(user.uid)" size="default" color="primary" mode="ios">Guardar</ion-button>
     <br>
 
 

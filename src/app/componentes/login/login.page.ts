@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
   OnLogin(){
     this.authService.login(this.email,this.password).then(res =>{
       this.showAlert("Excelente!","Bienvenido a BioBogota!.");
-        this.route.navigate(['folder/BioSitios']);
+        this.route.navigate(['folder/BioParques']);
     }).catch(err =>  this.showAlert("Error!","La información es Incorrecta!."));
     
   }
@@ -38,5 +38,15 @@ export class LoginPage implements OnInit {
 
     await alert.present();
 }
+
+
+  OnLoginGoogle(){
+
+    this.authService.LoginGoogle().then(() =>{
+      this.showAlert("Excelente!","Bienvenido a BioBogota!.");
+        this.route.navigate(['folder/BioParques']);
+    }).catch(err =>  this.showAlert("Error!","Algo salio mal!."+ err));
+    
+  }
 
 }

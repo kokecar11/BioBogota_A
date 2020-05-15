@@ -3,6 +3,8 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import { Router } from '@angular/router';
 import { resolve } from 'url';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { GooglePlus } from "@ionic-native/google-plus/ngx";
+import { auth } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,8 @@ export class AuthService {
 
   constructor(private afAuth : AngularFireAuth,
     private router : Router,
-    private FireDB : AngularFirestore,) { }
+    private FireDB : AngularFirestore,
+    private googlePlus : GooglePlus) { }
 
   login(email: string, password: string){
     
@@ -39,16 +42,26 @@ export class AuthService {
             uid : user_id,
             email : email
           });
-        /*this.FireDB.collection('Prueba').doc(user_id).set({
-          uid: user_id,
-          User : [
-            name = name,
-            email = res.user.email]
-        })*/
         resolve(res)
       }).catch(err => reject(err))
     });
     
+  }
+
+  LoginGoogle(){
+    return this.googlePlus.login({}).then(res => {
+      const UserDataGoogle = res;
+      this.FireDB.collection('Users').doc(UserDataGoogle.userId ).set({
+        name : UserDataGoogle.displayName,
+        uid : UserDataGoogle.userId,
+        email : UserDataGoogle.email
+      });
+      
+      return this.afAuth.signInWithCredential(auth.GoogleAuthProvider.credential(null, UserDataGoogle.accessToken));
+      
+
+    });
+
   }
 
 

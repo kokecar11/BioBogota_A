@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title color="primary">Iniciar Sesión</ion-title>
+    <ion-title color="primary">Iniciar Sesión - BioBogotá </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,11 +19,16 @@
     </ion-item>
     <br>
     <br>
+    <div class="centrado">
+      <ion-button (click)="OnLogin()" size="default" color="primary" mode="ios">Iniciar Sesión</ion-button>
+    </div>
+    <br>
 
     <div class="centrado">
-      <ion-button (click)="loginGoogle()"  size="default" color="danger" mode="ios"><ion-icon name="logo-google"></ion-icon></ion-button>
+      <ion-button (click)="OnLoginGoogle()"  size="default" color="danger" mode="ios"><ion-icon name="logo-google"></ion-icon></ion-button>
+      <ion-button (click)="loginFacebook()"  size="default" color="primary" mode="ios"><ion-icon name="logo-facebook"></ion-icon></ion-button>
     
-      <ion-button (click)="OnLogin()" size="default" color="primary" mode="ios">Iniciar Sesión</ion-button>
+      
       <p>Eres nuevo ? <a href="/register">Registrate!</a></p>
     </div>
  </div>

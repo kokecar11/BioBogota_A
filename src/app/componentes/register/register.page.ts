@@ -27,7 +27,7 @@ export class RegisterPage implements OnInit {
     if(this.cpassword == this.password){
       this.authService.register(this.email,this.password,this.name).then( res => {
         this.showAlert("Registro Completo!","Bienvenido a BioBogota!.");
-        this.route.navigate(['folder/BioSitios']);
+        this.route.navigate(['folder/BioParques']);
       }).catch(err => this.showAlert("Error!","No se puede registrar"));
     }else{
       this.showAlert("Error!","Las contraseñas no coinciden");
