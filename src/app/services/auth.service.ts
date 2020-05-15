@@ -28,6 +28,7 @@ export class AuthService {
 
   logout(){
     this.afAuth.signOut().then(() =>{
+      this.googlePlus.disconnect();
       this.router.navigate(['/login']);
     });
     
@@ -49,8 +50,9 @@ export class AuthService {
   }
 
   LoginGoogle(){
-    return this.googlePlus.login({}).then(res => {
-      const UserDataGoogle = res;
+    
+    return this.googlePlus.login({}).then(result => {
+      const UserDataGoogle = result;
       this.FireDB.collection('Users').doc(UserDataGoogle.userId ).set({
         name : UserDataGoogle.displayName,
         uid : UserDataGoogle.userId,

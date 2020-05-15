@@ -85,8 +85,7 @@
       },
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "co.biobogota",
-        "WEB_APPLICATION_CLIENT_ID": "302609994028-5msis5ak2en0ilf0fjc1nb16hgjgj77b.apps.googleusercontent.com",
-        "PLAY_SERVICES_VERSION": "15.0.1"
+        "WEB_APPLICATION_CLIENT_ID": "429183747995-pi5i0h7aum9eq82hkb2n94ujk1kor55t.apps.googleusercontent.com"
       }
     },
     "platforms": [

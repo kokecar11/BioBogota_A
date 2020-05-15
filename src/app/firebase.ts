@@ -1,12 +1,11 @@
  const firebaseConfig = {
-  apiKey: "AIzaSyAXSiGlPYSVhF49yNh8iviHip47iQQSGkw",
-  authDomain: "biobogota-39a18.firebaseapp.com",
-  databaseURL: "https://biobogota-39a18.firebaseio.com",
-  projectId: "biobogota-39a18",
-  storageBucket: "biobogota-39a18.appspot.com",
-  messagingSenderId: "302609994028",
-  appId: "1:302609994028:web:4e9ade71ef2e6a2d1adc89",
-  measurementId: "G-4NVZZLR9LW"
+    apiKey: "AIzaSyD5x-_JqyME7-1luOUpBxwA6Z4GXbZMVcI",
+    authDomain: "biobogotadev.firebaseapp.com",
+    databaseURL: "https://biobogotadev.firebaseio.com",
+    projectId: "biobogotadev",
+    storageBucket: "biobogotadev.appspot.com",
+    messagingSenderId: "429183747995",
+    appId: "1:429183747995:web:6d6c6072c32964e85d033e"
   };
   
   export default firebaseConfig;
