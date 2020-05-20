@@ -6,10 +6,11 @@
           <ion-list-header>BioBogotá</ion-list-header>
           <ion-note>
             <ion-chip *ngIf ="afAuth.user | async as user"> 
-              <ion-avatar>
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-              </ion-avatar>
-              <ion-label >{{ user.email }}</ion-label>
+              
+                <ion-avatar>
+                  <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                </ion-avatar>
+                <ion-label >{{ user.email }}</ion-label>              
             </ion-chip>
           </ion-note>
 

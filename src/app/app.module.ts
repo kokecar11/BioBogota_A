@@ -19,6 +19,11 @@ import { FaunaComponent } from './componentes/fauna/fauna.component';
 import { ParkComponent } from './componentes/Bioparks/park/park.component';
 import { FormsModule } from '@angular/forms';
 import { GooglePlus } from "@ionic-native/google-plus/ngx";
+import {Facebook} from '@ionic-native/facebook/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Crop } from '@ionic-native/crop/ngx'
+import { Base64 } from "@ionic-native/base64/ngx";
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 
 @NgModule({
@@ -32,13 +37,18 @@ import { GooglePlus } from "@ionic-native/google-plus/ngx";
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     FormsModule
   ],
   providers: [
+    Geolocation,
+    Facebook,
     GooglePlus,
     StatusBar,
     SplashScreen,
     Camera,
+    Crop,
+    Base64,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

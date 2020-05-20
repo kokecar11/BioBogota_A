@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ export class LoginPage implements OnInit {
 
   constructor(private authService : AuthService,
     private route : Router,
-    public alert: AlertController,) { }
+    public alert: AlertController,
+    private FireDB : AngularFirestore) { }
    
    email : string ;
    password : string ;
@@ -42,11 +44,30 @@ export class LoginPage implements OnInit {
 
   OnLoginGoogle(){
 
-    this.authService.LoginGoogle().then(() =>{
+    this.authService.LoginGoogle().then( res =>{
       this.showAlert("Excelente!","Bienvenido a BioBogota!.");
+      this.SaveFireUser(res)
         this.route.navigate(['folder/BioParques']);
-    }).catch(err =>  this.showAlert("Error!","Algo salio mal!."+ err));
+    }).catch(err =>  this.showAlert("Error!","Algo salio mal!."));
     
+  }
+
+  OnLoginFacebook(){
+    this.authService.LoginFacebook().then( res =>{
+      this.showAlert("Excelente!","Bienvenido a BioBogota!.");
+      this.SaveFireUser(res);
+      this.route.navigate(['/folder/BioParques'])
+    }).catch(err =>  this.showAlert("Error!","Algo salio mal!."));
+
+  }
+
+
+  SaveFireUser(res:any){
+    this.FireDB.collection('Users').doc(res.user.uid).set({
+      name : res.user.displayName ,
+      uid : res.user.uid,
+      email : res.user.email
+    });
   }
 
 }

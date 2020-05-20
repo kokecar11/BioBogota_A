@@ -18,36 +18,48 @@
     <br>
     <ion-item>
       <ion-label position="floating">Descripción</ion-label>
-        <ion-textarea [(ngModel)]="desc" placeholder="Escriba la descripcion del lugar..."></ion-textarea>
+        <ion-textarea [(ngModel)]="desc" placeholder="Escriba la descripción del BioSitio..."></ion-textarea>
+    </ion-item>
+    <br>
+    <ion-item *ngIf="isUploadStart">
+      <ion-spinner name="bubbles" *ngIf="Progress" ></ion-spinner>
+      <ion-input type="hidden" [(ngModel)]="img" [value]="imgUrl | async" ></ion-input>
+      <img [src]="image" id="image" *ngIf="croppedImage" class="croppedImage">
     </ion-item>
     <br>
     <ion-item>
-      <ion-label position="floating">Imagen</ion-label>
-      <ion-input type="text" [(ngModel)]="img" ></ion-input>
+      <ion-label>
+        Agregar Imagen al BioSitio
+      </ion-label>
+      <ion-button (click)="OnChooseImage()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="camera"></ion-icon></ion-button>
     </ion-item>
     <br>
     <ion-item>
-      <ion-label position="floating">Latitud</ion-label>
-      <ion-input type="number" [(ngModel)]="lat" ></ion-input>
+      <ion-label>
+        Agregar Ubicación al BioSitio
+      </ion-label>
+      <ion-button (click)="geoloca()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="pin"></ion-icon></ion-button>
     </ion-item>
     <br>
-    <ion-item>
-      <ion-label position="floating">Longitud</ion-label>
-      <ion-input type="number" [(ngModel)]="lng" ></ion-input>
-    </ion-item>
-    <br>
-   
+       
     <ion-item>
       <ion-label>BioSitios</ion-label>
-      <ion-select [(ngModel)]="type" placeholder="Seleccion un BioSitio">
+      <ion-select [(ngModel)]="type" placeholder="Selecciona un BioSitio">
         <ion-select-option value="BioParques">BioParque</ion-select-option>
         <ion-select-option value="BioRestaurantes">BioRestaurante</ion-select-option>
         <ion-select-option value="BioSenderos">BioSendero</ion-select-option>
       </ion-select>
     </ion-item>
- 
+    <br>
+   
+    
+    <div class="centrado">
+      <ion-button (click)="OnSavePark(user.uid)" size="default" color="primary" mode="ios">Guardar</ion-button>
+      <ion-button (click)="OnCancel()" size="default" color="primary" mode="ios">Cancelar</ion-button>
 
-    <ion-button (click)="OnSavePark(user.uid)" size="default" color="primary" mode="ios">Guardar</ion-button>
+    </div>
+   
+    
     <br>
 
 

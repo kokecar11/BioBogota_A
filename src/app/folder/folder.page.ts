@@ -10,6 +10,7 @@ import { ParkComponent } from '../componentes/Bioparks/park/park.component';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 
+
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.page.html',
@@ -36,7 +37,8 @@ export class FolderPage implements OnInit {
 
       this.parks = parkss;
       
-    })
+    });
+
   }
 
   locationPark(lat2:number ,lng2:number){
@@ -77,6 +79,7 @@ export class FolderPage implements OnInit {
     }).then((modal) => modal.present())
 
   }
+
 
 
 }

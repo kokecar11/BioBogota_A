@@ -5,6 +5,8 @@ import { resolve } from 'url';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GooglePlus } from "@ionic-native/google-plus/ngx";
 import { auth } from 'firebase';
+import {Facebook,FacebookLoginResponse} from '@ionic-native/facebook/ngx';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class AuthService {
   constructor(private afAuth : AngularFireAuth,
     private router : Router,
     private FireDB : AngularFirestore,
-    private googlePlus : GooglePlus) { }
+    private googlePlus : GooglePlus,
+    private facebook : Facebook) { }
 
   login(email: string, password: string){
     
@@ -53,17 +56,19 @@ export class AuthService {
     
     return this.googlePlus.login({}).then(result => {
       const UserDataGoogle = result;
-      this.FireDB.collection('Users').doc(UserDataGoogle.userId ).set({
-        name : UserDataGoogle.displayName,
-        uid : UserDataGoogle.userId,
-        email : UserDataGoogle.email
-      });
-      
       return this.afAuth.signInWithCredential(auth.GoogleAuthProvider.credential(null, UserDataGoogle.accessToken));
       
-
     });
 
+  }
+
+  async LoginFacebook(){
+
+    return this.facebook.login(['email','public_profile']).then((response : FacebookLoginResponse) =>{
+      const CredentialFacebook = auth.FacebookAuthProvider.credential(response.authResponse.accessToken);
+      return this.afAuth.signInWithCredential(CredentialFacebook);
+
+    });
   }
 
 

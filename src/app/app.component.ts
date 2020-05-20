@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { userInterface } from './models/users';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -34,21 +36,14 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Mis BioSitios',
-      url: '/BioSitios',
+      url: '/biositios',
       icon: 'heart'
     },
-    {
-      title: 'Camara',
-      url: '/camera',
-      icon: 'camera'
-    }
   ];
-  public labels = [{
-    title: 'Mis Biositios',
-    url: '/perfil/BioSitios',
-    icon: 'power'
-  }];
 
+
+  public user2 : userInterface;
+  uid : string
  
 
   constructor(
@@ -58,6 +53,7 @@ export class AppComponent implements OnInit {
     public afAuth: AngularFireAuth,
     public route: Router,
     private authService : AuthService,
+    private userService: UsersService
   ) {
     this.initializeApp();
   }
@@ -76,10 +72,16 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+
+    this.userService.getOnceUser(this.uid).subscribe(users =>{
+      return this.user2 = users;
+    })
+    console.log(this.uid)
   }
 
   OnLogout(){
-    this.authService.logout();
+    this.authService.logout(); 
+    console.log(this.uid)
   }
 
 }

@@ -1,4 +1,4 @@
-export interface parks {
+export interface parksInterface {
     user_id : string;
     id : string; 
     title: string;

@@ -26,6 +26,7 @@ export class ParkPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private route: Router,
     private objectService: ObjectService,
+    private geolocation :Geolocation,
     
     ) { }
 

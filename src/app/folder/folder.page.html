@@ -4,9 +4,6 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical" color="primary"></ion-icon>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -15,32 +12,41 @@
   <div class="container" *ngIf ="afAuth.user | async as user">
 
     <div *ngFor="let park of parks">
-      <ion-item *ngIf="park.type == folder">
+      <div *ngIf="park.type == folder">
         <ion-card >
+          <ion-item>
+            <ion-card-title slot="start">{{park.title}}</ion-card-title>
+            <ion-button slot="end" fill="outline" >
+              <ion-icon  ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+            </ion-button>
+          </ion-item>
           <ion-card-header>
-            <ion-card-subtitle >BioSitio Posteado por {{park.uid}}</ion-card-subtitle>
-            <ion-card-title>{{ park.title }}</ion-card-title>
+            <ion-card-subtitle >BioSitio publicado {{park.user_id.name_user}} </ion-card-subtitle>            
           </ion-card-header>
           <ion-card-content>
-            <img src="{{ park.img }}"/>
+            <ion-item><img src="{{ park.img }}"/></ion-item>
+            <br>
+             <p>{{park.desc}}</p>
           </ion-card-content>
-          <div class="centrado">
-              <ion-button (click)="locationPark(park.position.lat,park.position.lng)" color="primary" >
-                <ion-icon name="pin"></ion-icon>
-              </ion-button>
-
-              <ion-button (click)="camara()" color="primary" >
-                <ion-icon name="camera"></ion-icon> 
-              </ion-button>
-              <ion-button (click)="OnFauna(park)" color="primary" >
-                <ion-icon name="paw"></ion-icon> 
-              </ion-button>
-              <ion-button (click)="OnFlora(park)" color="primary" >
-                <ion-icon name="rose"></ion-icon> 
-              </ion-button>
-          </div>
+          
+          <br>
+            <div class="centrado" >
+                <ion-button (click)="locationPark(park.position.lat,park.position.lng)" color="primary" >
+                  <ion-icon name="pin"></ion-icon>
+                </ion-button>
+                <ion-button (click)="OnFauna(park)" color="primary" >
+                  <ion-icon name="paw"></ion-icon> 
+                </ion-button>
+                <ion-button (click)="OnFlora(park)" color="primary" >
+                  <ion-icon name="rose"></ion-icon> 
+                </ion-button>
+                <ion-button (click)="OnFlora(park)" color="primary" >
+                  <ion-icon name="thumbs-up"></ion-icon> 
+                </ion-button>
+            </div>
+            <br>
         </ion-card>
-      </ion-item>
+      </div>
     </div>
   </div>
 
