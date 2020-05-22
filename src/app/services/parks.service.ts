@@ -3,15 +3,6 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import { map } from "rxjs/operators";
 import {parksInterface} from "../models/parks";
 
-
-interface fandf {
-  name : string
-  type : string
-  img : string 
-  desc : string
-
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +24,7 @@ export class ParksService {
 
   }
 
-  saveParks(title : string, img : string, lat : number, lng : number, type : string, desc: string, uid: string,name_user:string){
+  saveParks(title : string, img : string, lat : number, lng : number, type : string, desc: string, uid: string,name_user:string, name_img:string){
     const id = this.Firedb.createId();
     return new Promise<void>((resolve, reject) => {
       this.Firedb.collection('Parks').doc(id).set({
@@ -41,6 +32,7 @@ export class ParksService {
           title : title,
           desc : desc,
           img : img,
+          name_img :name_img ,
           type : type,
           position : {
             lat : lat,
@@ -49,6 +41,9 @@ export class ParksService {
           user_id: {
             name_user :name_user,
             uid: uid
+          },
+          fandf: {
+            name : ""
           }
     }).then(res => {
       resolve(res)

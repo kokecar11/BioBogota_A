@@ -1,32 +1,66 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar >
     <ion-button (click)="back()" slot="start" fill="clear">
       <ion-icon  name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-title>Fauna</ion-title>
+    <ion-title >Agregar un Fauna o Flora</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div >
-    <ion-item >
-     <ion-card >
-      <ion-card-header>
-        <ion-card-subtitle>Fauna de {{title}}</ion-card-subtitle>
-        <ion-card-title>{{nameF}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <img src="https://concepto.de/wp-content/uploads/2018/10/flora-y-fauna1-e1538585100273.jpg"/>
-        <p>{{fauna.fauna.desc}}</p>
-      </ion-card-content>
-      <ion-button color="primary" >
-        <ion-icon name="pin"></ion-icon>
-      </ion-button>
-   
-      <ion-button color="primary" >
-       <ion-icon name="camera"></ion-icon>
-      </ion-button>
-     </ion-card>
+ <div class="container" *ngIf ="afAuth.user | async as user">
+  <br>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="name" ></ion-input>
     </ion-item>
-   </div>
+    <br>
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea [(ngModel)]="desc" placeholder="Escriba la descripción de la Fauna o Flora que haya encontrado..."></ion-textarea>
+    </ion-item>
+    <br>
+    <ion-item *ngIf="isUploadStart">
+      <ion-spinner name="bubbles" *ngIf="Progress" ></ion-spinner>
+      <ion-input type="hidden" [(ngModel)]="img" [value]="imgUrl | async" ></ion-input>
+      <img src="" id="image" class="croppedImage">
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label>
+        Agregar Imagen al BioSitio
+      </ion-label>
+      <ion-button (click)="OnChooseImage()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="camera"></ion-icon></ion-button>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label>
+        Agregar Ubicación al BioSitio
+      </ion-label>
+      <ion-button (click)="geoloca()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="pin"></ion-icon></ion-button>
+    </ion-item>
+    <br>
+       
+    <ion-item>
+      <ion-label>Hago parte de..</ion-label>
+      <ion-select [(ngModel)]="type_f" placeholder="Selecciona un tipo">
+        <ion-select-option value="fauna">Fauna</ion-select-option>
+        <ion-select-option value="flora">Flora</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <br>
+   
+    
+    <div class="centrado">
+      <ion-button (click)="OnSaveFandF(user.uid)" size="default" color="primary" mode="ios">Guardar</ion-button>
+      <ion-button (click)="OnCancel()" size="default" color="primary" mode="ios">Cancelar</ion-button>
+
+    </div>
+   
+    
+    <br>
+
+
+  </div>
+    <br>
 </ion-content>

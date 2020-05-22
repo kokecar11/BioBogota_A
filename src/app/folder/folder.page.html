@@ -16,7 +16,7 @@
         <ion-card >
           <ion-item>
             <ion-card-title slot="start">{{park.title}}</ion-card-title>
-            <ion-button slot="end" fill="outline" >
+            <ion-button slot="end" fill="outline" (click)="presentActionSheet(park.id)">
               <ion-icon  ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
             </ion-button>
           </ion-item>
@@ -40,11 +40,11 @@
                 <ion-button (click)="OnFlora(park)" color="primary" >
                   <ion-icon name="rose"></ion-icon> 
                 </ion-button>
-                <ion-button (click)="OnFlora(park)" color="primary" >
+                <ion-button (click)="OnLike()" color="primary" >
                   <ion-icon name="thumbs-up"></ion-icon> 
                 </ion-button>
             </div>
-            <br>
+          <br>
         </ion-card>
       </div>
     </div>
@@ -52,10 +52,10 @@
 
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button>
-    <ion-icon name="ellipsis-vertical"></ion-icon>
+    <ion-icon name="add"></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
-    <ion-fab-button (click)="OnCreatePark()"><ion-icon name="add"></ion-icon ></ion-fab-button>
+    <ion-fab-button (click)="OnCreatePark()"><ion-icon name="planet"></ion-icon ></ion-fab-button>
   </ion-fab-list>
 </ion-fab>
 

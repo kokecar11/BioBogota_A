@@ -3,29 +3,36 @@
     <ion-button (click)="backs()" slot="start" fill="clear">
       <ion-icon  name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-title>Fauna</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div >
+  <div *ngFor="let fauna of faunas">
     <ion-item >
      <ion-card >
       <ion-card-header>
         <ion-card-subtitle>Fauna de {{title}}</ion-card-subtitle>
-        <ion-card-title>{{nameF}}</ion-card-title>
+        <ion-card-title>{{fauna.name}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <img src="https://concepto.de/wp-content/uploads/2018/10/flora-y-fauna1-e1538585100273.jpg"/>
-        <p></p>
+        <img src="{{fauna.img}}"/>
+        
       </ion-card-content>
-      <ion-button color="primary" >
-        <ion-icon name="pin"></ion-icon>
-      </ion-button>
-   
-      <ion-button color="primary" >
-       <ion-icon name="camera"></ion-icon>
-      </ion-button>
+      <ion-item>
+        <p>{{fauna.desc}}</p>
+      </ion-item>
+
+      <br>
+      <div class="centrado" >
+        <ion-button color="primary" (click)="locationFauna(fauna.position.lat,fauna.position.lng)" >
+          <ion-icon name="pin"></ion-icon>
+        </ion-button>
+        <ion-button color="primary" >
+         <ion-icon name="thumbs-up"></ion-icon>
+        </ion-button>
+      </div>
+      <br>
      </ion-card>
     </ion-item>
    </div>

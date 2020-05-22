@@ -15,7 +15,7 @@
       <div *ngIf="park.user_id.uid == user.uid ">
         <ion-card >
           <ion-item>
-            <ion-button slot="end" fill="outline" (click)="presentActionSheet(park.id)">
+            <ion-button slot="end" fill="outline" (click)="presentActionSheet(park.id, park.name_img)">
               <ion-icon  ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
             </ion-button>
             <ion-card-title slot="start">{{park.title}}</ion-card-title>

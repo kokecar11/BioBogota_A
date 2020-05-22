@@ -24,7 +24,7 @@
     <ion-item *ngIf="isUploadStart">
       <ion-spinner name="bubbles" *ngIf="Progress" ></ion-spinner>
       <ion-input type="hidden" [(ngModel)]="img" [value]="imgUrl | async" ></ion-input>
-      <img [src]="image" id="image" *ngIf="croppedImage" class="croppedImage">
+      <img src="" id="image" class="croppedImage">
     </ion-item>
     <br>
     <ion-item>

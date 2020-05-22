@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { ParksService } from 'src/app/services/parks.service';
 import { ActionSheetController } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-biositios',
@@ -15,7 +16,8 @@ export class BiositiosPage implements OnInit {
   constructor(private afAuth : AngularFireAuth,
     public route: Router,
     public parkService : ParksService,
-    public actionSheetController: ActionSheetController) { }
+    public actionSheetController: ActionSheetController,
+    private afStorage : AngularFireStorage) { }
 
   ngOnInit() {
 
@@ -27,7 +29,7 @@ export class BiositiosPage implements OnInit {
     });
   }
 
-  async presentActionSheet(idPark : string) {
+  async presentActionSheet(idPark : string,name_img : string) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Acciones',
       buttons: [{
@@ -36,7 +38,7 @@ export class BiositiosPage implements OnInit {
         icon: 'trash',
         handler: () => {
           
-          this.OnDeletePark(idPark)
+          this.OnDeletePark(idPark, name_img)
         }
       },{
         text: 'Editar',
@@ -58,8 +60,10 @@ export class BiositiosPage implements OnInit {
     await actionSheet.present();
   }
 
-  OnDeletePark(idPark : string){
+  OnDeletePark(idPark : string,name_img : string ){
     this.parkService.deletePark(idPark);
+    const ref = this.afStorage.ref(`images/${name_img}`);
+    ref.delete();
   }
 
 }

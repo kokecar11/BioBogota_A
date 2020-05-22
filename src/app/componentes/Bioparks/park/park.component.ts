@@ -13,6 +13,7 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { Observable } from 'rxjs';
+import { CameraService } from 'src/app/services/camera.service';
 
 @Component({
   selector: 'app-park',
@@ -46,12 +47,10 @@ export class ParkComponent implements OnInit {
     private fireDB : AngularFirestore,
     private userService : UsersService,
     private geolocation : Geolocation,
-    public base64: Base64,
-    public camera: Camera,
-    public crop : Crop,
     public afStorage : AngularFireStorage,
     public actionSheetController : ActionSheetController,
     private toastController : ToastController,
+    private cameraService : CameraService,
 
     ) { }
 
@@ -61,7 +60,7 @@ export class ParkComponent implements OnInit {
   OnSavePark(uid : string){
     this.userService.getOnceUser(uid).subscribe(users =>{
       this.user = users;
-      this.parkService.saveParks(this.title, this.img, this.lat, this.lng, this.type, this.desc,uid,this.user.name).then( res => {
+      this.parkService.saveParks(this.title, this.img, this.lat, this.lng, this.type, this.desc,uid,this.user.name, this.name_img).then( res => {
         this.showAlert("Publicación Completa","El BioSitio "+ this.title+" fue publicado correctamente!");
         this.route.navigate(['folder/'+this.type]);
         this.back()
@@ -133,74 +132,46 @@ async presentToast(message : string ) {
 
 
   OnCamera(){
+    this.cameraService.Camera().then(resp =>{
+      const optionCamera = resp;
+      this.cameraService.Options(optionCamera).then(img =>{
+        this.croppedImage = img.toString();
+        const imagen = this.croppedImage;
+        this.preUploadIMG(imagen);
+      });
+    });
 
-    let options : CameraOptions = {
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      destinationType: this.camera.DestinationType.FILE_URI
-    };
-
-    this.camera.getPicture(options).then(filePath =>{
-      this.crop.crop(filePath).then((croppedPath) =>{
-        this.base64.encodeFile(croppedPath).then(base64Data => {
-
-          let temp = base64Data.substring(34);
-          this.croppedImage = 'data:image/jpeg;base64,' + temp;
-
-          setTimeout(() =>{
-            //document.getElementById("image").setAttribute("src",this.croppedImage);
-            this.image = this.croppedImage;
-            this.Progress = false;
-          }, 250); 
-          this.presentToast("Imagen preparada!");
-          this.preUploadIMG();
-        })
-      })
-    })
+    
 
   }
 
   OnGallery(){
+    this.cameraService.Gallery().then(resp =>{
+       const optionGallery = resp;
+       this.cameraService.Options(optionGallery).then(img =>{
+        this.croppedImage =  img;
+        const imagen = this.croppedImage;
+        this.preUploadIMG(imagen);
+      });
+    });
 
-    let options : CameraOptions ={
-      sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
-      encodingType : this.camera.EncodingType.JPEG,
-      mediaType : this.camera.MediaType.PICTURE,
-      destinationType : this.camera.DestinationType.FILE_URI
-    };
-
-    this.camera.getPicture(options).then(filePath => {
-      this.crop.crop(filePath).then((croppedPath) =>{
-        this.base64.encodeFile(croppedPath).then(base64Data =>{
-
-          let temp = base64Data.substring(34);
-          this.croppedImage = 'data:image/jpeg;base64,' + temp;
-      
-          
-          setTimeout(() =>{
-            //document.getElementById("image").setAttribute("src",this.croppedImage);
-            this.image = this.croppedImage;
-            this.Progress = false;
-          }, 250); 
-          this.presentToast("Imagen preparada!");
-          this.preUploadIMG();
-          
-        })
-      })
-    })
-
+    
+         
   }
 
-  preUploadIMG(){
+  preUploadIMG(imagen : string){
     
     const ref = this.afStorage.ref(`images/${this.name_img}`);
-    const task =  ref.putString(this.croppedImage,"data_url");
+    const task =  ref.putString(imagen,"data_url");
     this.percent = task.percentageChanges();
     this.isUploadStart = true;
     this.Progress = true;
     task.snapshotChanges().pipe(finalize(()=> this.imgUrl = ref.getDownloadURL())).subscribe();
-
+    setTimeout(() =>{
+      document.getElementById("image").setAttribute("src",imagen);
+      this.Progress = false;
+    }, 250);
+    this.presentToast("Imagen preparada!");
   }
 
   deleteIMG(){
