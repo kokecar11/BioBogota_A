@@ -22,22 +22,22 @@ export class AppComponent implements OnInit {
     {
       title: 'BioParques',
       url: '/folder/BioParques',
-      icon: 'mail'
+      icon: 'earth'
     },
     {
       title: 'BioRestaurantes',
       url: '/folder/BioRestaurantes',
-      icon: 'paper-plane'
+      icon: 'restaurant'
     },
     {
       title: 'BioSenderos',
       url: '/folder/BioSenderos',
-      icon: 'heart'
+      icon: 'walk'
     },
     {
       title: 'Mis BioSitios',
       url: '/biositios',
-      icon: 'heart'
+      icon: 'heart',
     },
   ];
 
@@ -67,17 +67,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.afAuth.user.subscribe(res => {
+      this.userService.getOnceUser(res.uid).subscribe(users =>{
+        this.user2 = users;
+      });
+    });
     
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-
-    this.userService.getOnceUser(this.uid).subscribe(users =>{
-      return this.user2 = users;
-    })
-    console.log(this.uid)
-  }
+    
+   }
 
   OnLogout(){
     this.authService.logout(); 

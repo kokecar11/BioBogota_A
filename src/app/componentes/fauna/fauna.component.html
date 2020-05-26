@@ -1,39 +1,45 @@
 <ion-header>
   <ion-toolbar>
     <ion-button (click)="backs()" slot="start" fill="clear">
-      <ion-icon  name="arrow-back"></ion-icon>
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+<div class="container" *ngIf="afAuth.user | async as user">
+
   <div *ngFor="let fauna of faunas">
-    <ion-item >
-     <ion-card >
+   
+    <ion-card>
+      <ion-button slot="end" fill="outline" (click)="presentActionSheet(park.id)" color="secondary">
+        <ion-icon ios="ellipsis-horizontal" md="ellipsis-vertical" color="secondary"></ion-icon>
+      </ion-button>
+      <br>
+      <img src="{{fauna.img}}" />
       <ion-card-header>
-        <ion-card-subtitle>Fauna de {{title}}</ion-card-subtitle>
+        <ion-card-subtitle>Publicado por {{fauna.user_id.name_user}}</ion-card-subtitle>
+        <ion-card-subtitle>{{fauna.type_f}} de {{title}}</ion-card-subtitle>
         <ion-card-title>{{fauna.name}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <img src="{{fauna.img}}"/>
-        
+        {{fauna.desc}}
       </ion-card-content>
-      <ion-item>
-        <p>{{fauna.desc}}</p>
-      </ion-item>
-
-      <br>
-      <div class="centrado" >
-        <ion-button color="primary" (click)="locationFauna(fauna.position.lat,fauna.position.lng)" >
+      <div class="centrado">
+        <ion-button (click)="locationFauna(fauna.position.lat,fauna.position.lng)" color="secondary">
           <ion-icon name="pin"></ion-icon>
         </ion-button>
-        <ion-button color="primary" >
-         <ion-icon name="thumbs-up"></ion-icon>
+        <ion-button (click)="OnLike(fauna,liked)" color="secondary">
+          <ion-icon name="thumbs-up"> </ion-icon>
+          <span> {{fauna.reactions.length}} </span>
+        </ion-button>
+        <ion-button *ngIf="user.uid == fauna.user_id.uid" (click)="OnOptionsUser(fauna.id)" color="secondary">
+          <ion-icon ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         </ion-button>
       </div>
       <br>
-     </ion-card>
-    </ion-item>
-   </div>
+    </ion-card>
+  </div>
+</div>
 </ion-content>

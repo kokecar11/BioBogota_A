@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar color="success" >
     <ion-button (click)="back()" slot="start" fill="clear">
       <ion-icon  name="arrow-back"></ion-icon>
     </ion-button>
@@ -30,30 +30,30 @@
       <ion-label>
         Agregar Imagen al BioSitio
       </ion-label>
-      <ion-button (click)="OnChooseImage()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="camera"></ion-icon></ion-button>
+      <ion-button (click)="OnChooseImage()" expand="block" size="default" color="success" slot="end" mode="ios"><ion-icon  name="camera"></ion-icon></ion-button>
     </ion-item>
     <br>
     <ion-item>
       <ion-label>
         Agregar Ubicación al BioSitio
       </ion-label>
-      <ion-button (click)="geoloca()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="pin"></ion-icon></ion-button>
+      <ion-button (click)="geoloca()" expand="block" size="default" color="success" slot="end" mode="ios"><ion-icon  name="pin"></ion-icon></ion-button>
     </ion-item>
     <br>
        
     <ion-item>
       <ion-label>Hago parte de..</ion-label>
       <ion-select [(ngModel)]="type_f" placeholder="Selecciona un tipo">
-        <ion-select-option value="fauna">Fauna</ion-select-option>
-        <ion-select-option value="flora">Flora</ion-select-option>
+        <ion-select-option value="Fauna">Fauna</ion-select-option>
+        <ion-select-option value="Flora">Flora</ion-select-option>
       </ion-select>
     </ion-item>
     <br>
    
     
     <div class="centrado">
-      <ion-button (click)="OnSaveFandF(user.uid)" size="default" color="primary" mode="ios">Guardar</ion-button>
-      <ion-button (click)="OnCancel()" size="default" color="primary" mode="ios">Cancelar</ion-button>
+      <ion-button (click)="OnSaveFandF(user.uid)" size="default" color="success" mode="ios">Guardar</ion-button>
+      <ion-button (click)="OnCancel()" size="default" color="danger" mode="ios">Cancelar</ion-button>
 
     </div>
    

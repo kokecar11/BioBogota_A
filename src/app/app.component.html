@@ -3,19 +3,23 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>BioBogotá</ion-list-header>
+
+          <ion-list-header>
+            <p class="bio">Bio</p>
+            <p class="bog">Bogotá</p>
+          </ion-list-header>
           <ion-note>
-            <ion-chip *ngIf ="afAuth.user | async as user"> 
-              
-                <ion-avatar>
-                  <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                </ion-avatar>
-                <ion-label >{{ user.email }}</ion-label>              
+            <ion-chip *ngIf="afAuth.user | async as user">
+              <ion-avatar >
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar>
+              <ion-label>{{ user.email }}</ion-label>
             </ion-chip>
           </ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
+              detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
@@ -24,15 +28,16 @@
 
         <ion-list id="labels-list">
           <ion-list-header>Mi Perfil</ion-list-header>
-
           <ion-item *ngFor="let label of labels" lines="none">
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ label.title }}</ion-label>
           </ion-item>
-          <ion-button (click)="OnLogout()" color="danger" >
-            <ion-icon name="power"></ion-icon> 
+          <ion-button (click)="OnLogout()" color="danger" expand="block" fill="outline">
+            <ion-icon name="power" slot="start"></ion-icon>
+            Cerrar sesión
           </ion-button>
         </ion-list>
+        
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

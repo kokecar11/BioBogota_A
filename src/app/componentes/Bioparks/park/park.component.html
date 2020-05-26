@@ -1,47 +1,57 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar color="secondary">
     <ion-button (click)="back()" slot="start" fill="clear">
-      <ion-icon  name="arrow-back"></ion-icon>
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-title >Agregar un BioSitio</ion-title>
+    <ion-title *ngIf="id_Park">Actualizar un BioSitio</ion-title>
+    <ion-title *ngIf="id_Park == null">Agregar un BioSitio</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- <div class="container" *ngIf ="afAuth.user | async as user">
-  
-  <br>
+  <div class="container" *ngIf="afAuth.user | async as user">
+
+    <br>
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="title" ></ion-input>
+      <ion-input type="text" [(ngModel)]="title"></ion-input>
     </ion-item>
     <br>
+
     <ion-item>
       <ion-label position="floating">Descripción</ion-label>
-        <ion-textarea [(ngModel)]="desc" placeholder="Escriba la descripción del BioSitio..."></ion-textarea>
+      <ion-textarea [(ngModel)]="desc" placeholder="Escriba la descripción del BioSitio..."></ion-textarea>
     </ion-item>
     <br>
-    <ion-item *ngIf="isUploadStart">
-      <ion-spinner name="bubbles" *ngIf="Progress" ></ion-spinner>
-      <ion-input type="hidden" [(ngModel)]="img" [value]="imgUrl | async" ></ion-input>
-      <img src="" id="image" class="croppedImage">
+    
+    <ion-item *ngIf="isUploadStart" id="imagen">
+      <ion-spinner name="bubbles" *ngIf="Progress"></ion-spinner>
+      <ion-input type="hidden" [(ngModel)]="img" [value]="imgUrl | async"></ion-input>
+      <img [src]="" id="image" class="croppedImage">
+     <!-- <img *ngIf="image" [src]="image" alt="image">-->
     </ion-item>
     <br>
+
     <ion-item>
       <ion-label>
         Agregar Imagen al BioSitio
       </ion-label>
-      <ion-button (click)="OnChooseImage()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="camera"></ion-icon></ion-button>
+      <ion-button (click)="OnChooseImage()" expand="block" size="default" color="secondary" slot="end">
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
     </ion-item>
     <br>
+
     <ion-item>
       <ion-label>
         Agregar Ubicación al BioSitio
       </ion-label>
-      <ion-button (click)="geoloca()" expand="block" size="default" color="primary" slot="end" mode="ios"><ion-icon  name="pin"></ion-icon></ion-button>
+      <ion-button (click)="geoloca()" expand="block" size="default" color="secondary" slot="end">
+        <ion-icon name="pin"></ion-icon>
+      </ion-button>
     </ion-item>
     <br>
-       
+
     <ion-item>
       <ion-label>BioSitios</ion-label>
       <ion-select [(ngModel)]="type" placeholder="Selecciona un BioSitio">
@@ -51,18 +61,18 @@
       </ion-select>
     </ion-item>
     <br>
-   
-    
+
     <div class="centrado">
-      <ion-button (click)="OnSavePark(user.uid)" size="default" color="primary" mode="ios">Guardar</ion-button>
-      <ion-button (click)="OnCancel()" size="default" color="primary" mode="ios">Cancelar</ion-button>
-
+      <div *ngIf="id_Park">
+        <ion-button (click)="OnUpdatePark()" size="default" color="secondary" mode="ios">Actualizar</ion-button>
+        <ion-button (click)="OnCancel()" size="default" color="danger" mode="ios">Cancelar</ion-button>
+      </div>
+      <div *ngIf="id_Park == null">
+        <ion-button (click)="OnSavePark()" size="default" color="secondary" mode="ios">Guardar</ion-button>
+        <ion-button (click)="OnCancel()" size="default" color="danger" mode="ios">Cancelar</ion-button>
+      </div>
     </div>
-   
-    
     <br>
-
-
   </div>
-    <br>
+  <br>
 </ion-content>

@@ -80,6 +80,9 @@ export class FandfComponent implements OnInit {
         icon: 'images-outline',
         handler: () => {
           this.OnGallery()
+          setTimeout(() =>{
+            document.getElementById("image").setAttribute("src",this.img);
+          }, 250);
         }
       },{
         text: 'Tomar Foto',
@@ -87,6 +90,9 @@ export class FandfComponent implements OnInit {
         role: 'update',
         handler: () => {
           this.OnCamera()
+          setTimeout(() =>{
+            document.getElementById("image").setAttribute("src",this.img);
+          }, 250);
         }
       },
        {
@@ -123,6 +129,9 @@ export class FandfComponent implements OnInit {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.lat = resp.coords.latitude
       this.lng = resp.coords.longitude
+      setTimeout(() =>{
+        document.getElementById("image").setAttribute("src",this.img);
+      }, 250);
     }).catch(err => {this.showAlert("Error!","No se pudo ubicar"), this.deleteIMG()});
     this.presentToast("Ubicación Obtenida!");
     return this.lat,this.lng;
@@ -134,6 +143,10 @@ export class FandfComponent implements OnInit {
       this.cameraService.Options(optionCamera).then(img =>{
         this.croppedImage = img.toString();
         const imagen = this.croppedImage;
+        setTimeout(() =>{
+          document.getElementById("image").setAttribute("src",imagen);
+          this.Progress = false;
+        }, 250);
         this.preUploadIMG(imagen);
       });
     });
@@ -148,6 +161,10 @@ export class FandfComponent implements OnInit {
        this.cameraService.Options(optionGallery).then(img =>{
         this.croppedImage =  img;
         const imagen = this.croppedImage;
+        setTimeout(() =>{
+          document.getElementById("image").setAttribute("src",imagen);
+          this.Progress = false;
+        }, 250);
         this.preUploadIMG(imagen);
       });
     });
@@ -158,7 +175,7 @@ export class FandfComponent implements OnInit {
 
   preUploadIMG(imagen : string){
     
-    const ref = this.afStorage.ref(`images/${this.name_img}`);
+    const ref = this.afStorage.ref(`images/${this.type_f}/${this.name_img}`);
     const task =  ref.putString(imagen,"data_url");
     this.percent = task.percentageChanges();
     this.isUploadStart = true;
@@ -174,7 +191,7 @@ export class FandfComponent implements OnInit {
   
   deleteIMG(){
 
-    const ref = this.afStorage.ref(`images/${this.name_img}`);
+    const ref = this.afStorage.ref(`images/${this.type_f}/${this.name_img}`);
     ref.delete();
   
   }

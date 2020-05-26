@@ -7,6 +7,8 @@ import { GooglePlus } from "@ionic-native/google-plus/ngx";
 import { auth } from 'firebase';
 import {Facebook,FacebookLoginResponse} from '@ionic-native/facebook/ngx';
 
+//Servicio de autenticacion con FireBase
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ export class AuthService {
     private googlePlus : GooglePlus,
     private facebook : Facebook) { }
 
+//Inicia sesion del usuario.
   login(email: string, password: string){
     
     return new Promise((resolve, rejected) =>{
@@ -28,7 +31,7 @@ export class AuthService {
     });
   }
 
-
+//Cierra la Sesion del usuario.
   logout(){
     this.afAuth.signOut().then(() =>{
       this.googlePlus.disconnect();
@@ -37,6 +40,8 @@ export class AuthService {
     
   }
 
+//Registra a los usuarios a la plataforma y guarda los datos en la BD
+
   register(email : string, password : string ,name :string){
     return new Promise((resolve, reject) => {
       this.afAuth.createUserWithEmailAndPassword(email,password).then(res =>{
@@ -44,7 +49,7 @@ export class AuthService {
         this.FireDB.collection('Users').doc(user_id).set({
             name : name,
             uid : user_id,
-            email : email
+            email : email,
           });
         resolve(res)
       }).catch(err => reject(err))
@@ -52,6 +57,7 @@ export class AuthService {
     
   }
 
+//Inicio de Sesion con el Proveedor de servicio de google
   LoginGoogle(){
     
     return this.googlePlus.login({}).then(result => {
@@ -62,6 +68,7 @@ export class AuthService {
 
   }
 
+//Inicio de Sesion con el Proveedor de servicio de Facebook
   async LoginFacebook(){
 
     return this.facebook.login(['email','public_profile']).then((response : FacebookLoginResponse) =>{

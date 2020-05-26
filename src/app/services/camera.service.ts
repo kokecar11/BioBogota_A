@@ -6,6 +6,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 @Injectable({
   providedIn: 'root'
 })
+
+//Servicio de la Camara
 export class CameraService {
 
   constructor( public base64: Base64,
@@ -13,7 +15,7 @@ export class CameraService {
     public crop : Crop) { }
 
 
-
+//Activa la Camara del Celular para poder tomar una foto
   async Camera (){
     let options : CameraOptions ={
       sourceType : this.camera.PictureSourceType.CAMERA,
@@ -23,6 +25,8 @@ export class CameraService {
     };
     return  options;
   }
+
+  //Entra en la galeria del Celular para poder escoger una foto.
 
   async Gallery (){
 
@@ -36,7 +40,7 @@ export class CameraService {
 
   }
 
-
+//Recibe la opcion que haya escogido el usuario para poder asignar la foto en el preview y almacenarla en el Storage
  async Options(options : CameraOptions){
   return this.camera.getPicture(options).then(filePath =>{
     return this.crop.crop(filePath).then((croppedPath) =>{

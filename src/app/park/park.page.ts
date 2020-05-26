@@ -6,6 +6,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 declare var google;
 
+//Crea un Mapa y pone el lugar donde esta ubicado el Parque o Fauna y flora.
+
 @Component({
   selector: 'app-park',
   templateUrl: './park.page.html',
@@ -40,9 +42,8 @@ export class ParkPage implements OnInit {
   }
 
   loadMap() {
-    // create a new map by passing HTMLElement
     const mapEle: HTMLElement = document.getElementById('map');
-    // create map
+    // creac el mapa
     this.map = new google.maps.Map(mapEle, {
       center: this.marker,
       zoom: 14
@@ -59,6 +60,7 @@ export class ParkPage implements OnInit {
     });
   }
 
+  //Agrega el marcador.
   addMarker() {
     return new google.maps.Marker({
       position: this.marker,
@@ -67,6 +69,7 @@ export class ParkPage implements OnInit {
     });
   }
 
+  //Calcular la ruta.
   private calculateRoute(){
     this.directionsService.route({
       origin: this.origin,

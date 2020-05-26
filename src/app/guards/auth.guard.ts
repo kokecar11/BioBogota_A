@@ -11,6 +11,7 @@ import { isNullOrUndefined } from 'util';
 })
 export class AuthGuard implements CanActivate {
 
+  //Los Guards dan Seguridad a la App para que las personas que no esta logeadas no puedan acceder a cualquier pagina de la app.
   constructor(private afAuth : AngularFireAuth,
     private router : Router){}
 

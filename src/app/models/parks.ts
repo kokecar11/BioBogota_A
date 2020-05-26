@@ -5,10 +5,12 @@ export interface parksInterface {
     img: string;
     type:string;
     desc: string;
+    name_img: string;
     position:{
       lat: number,
       lng: number,
     };
+    reactions: {}
 
     
   }

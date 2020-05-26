@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ObjectService {
 
+  //servicio para enviar un objeto o una lista
   private objectSource = new BehaviorSubject<{}>({});
   private listSoruce = new BehaviorSubject<any[]>([]);
 

@@ -14,7 +14,6 @@ import { AngularFireAuthModule  } from '@angular/fire/auth';
 import {AngularFirestoreModule, AngularFirestore} from '@angular/fire/firestore';
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import { FandfComponent } from './componentes/fandf/fandf.component';
-import { FloraComponent } from './componentes/flora/flora.component';
 import { FaunaComponent } from './componentes/fauna/fauna.component';
 import { ParkComponent } from './componentes/Bioparks/park/park.component';
 import { FormsModule } from '@angular/forms';
@@ -27,8 +26,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 
 
 @NgModule({
-  declarations: [AppComponent,FandfComponent,FaunaComponent,FloraComponent,ParkComponent],
-  entryComponents: [FandfComponent,FaunaComponent,FloraComponent,ParkComponent],
+  declarations: [AppComponent,FandfComponent,FaunaComponent,ParkComponent],
+  entryComponents: [FandfComponent,FaunaComponent,ParkComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

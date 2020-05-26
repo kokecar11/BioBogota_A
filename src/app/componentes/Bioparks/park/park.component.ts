@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, AlertController, ActionSheetController, ToastController } from '@ionic/angular';
+import { ModalController, AlertController, ActionSheetController, ToastController, NavParams } from '@ionic/angular';
 import { ParksService } from 'src/app/services/parks.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -12,8 +12,9 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
-import { Observable } from 'rxjs';
+import { Observable, empty } from 'rxjs';
 import { CameraService } from 'src/app/services/camera.service';
+import { parksInterface } from 'src/app/models/parks';
 
 @Component({
   selector: 'app-park',
@@ -28,7 +29,8 @@ export class ParkComponent implements OnInit {
   lng : number;
   type : string;
   desc: string;
-  name_img = Math.random().toString(36).substring(2);
+  id_Park : parksInterface ;
+  name_img : string;
 
   croppedImage : string;
   percent;
@@ -36,7 +38,7 @@ export class ParkComponent implements OnInit {
   Progress = false;
   message : string;
   image : string;
-
+  IsUpdate : boolean;
   public user : userInterface;
 
   constructor(private modal: ModalController,
@@ -51,22 +53,57 @@ export class ParkComponent implements OnInit {
     public actionSheetController : ActionSheetController,
     private toastController : ToastController,
     private cameraService : CameraService,
+    private navparams : NavParams,
 
     ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.id_Park = this.navparams.get("id_Park");
+    this.IsUpdate = this.navparams.get("IsUpdate");
+    if(this.IsUpdate){
+     this.OnGetPark();
+    }
+    
+  }
+//Obtiene 1 Parque que se va actualizar.
+  OnGetPark(){
+  
+      this.isUploadStart = true;
+      this.title = this.id_Park.title
+      //this.img = this.id_Park.img
+      this.desc = this.id_Park.desc
+      this.type = this.id_Park.type
+      this.lat = this.id_Park.position.lat
+      this.lng = this.id_Park.position.lng
+
+      setTimeout(() =>{
+      document.getElementById("image").setAttribute("src",this.id_Park.img);
+      this.Progress = false;
+      }, 250);
+          
+  }
 
 
-  OnSavePark(uid : string){
-    this.userService.getOnceUser(uid).subscribe(users =>{
+  OnSavePark(){
+    this.afAuth.user.subscribe(res =>{
+    this.userService.getOnceUser(res.uid).subscribe(users =>{
       this.user = users;
-      this.parkService.saveParks(this.title, this.img, this.lat, this.lng, this.type, this.desc,uid,this.user.name, this.name_img).then( res => {
+      this.parkService.saveParks(this.title, this.img, this.lat, this.lng, this.type, this.desc,res.uid,this.user.name, this.name_img).then( res => {
         this.showAlert("Publicación Completa","El BioSitio "+ this.title+" fue publicado correctamente!");
         this.route.navigate(['folder/'+this.type]);
         this.back()
-      }).catch(err => this.showAlert("Error!","No se puede Publicar"));
+      }).catch(err => this.showAlert("Error!","No se puede Publicar"+err));
     });
+  })
 
+  }
+
+  OnUpdatePark(){
+    this.parkService.updatePark(this.id_Park.id,this.title, this.img, this.lat, this.lng, this.type, this.desc,this.name_img).then(res =>{
+      this.showAlert("Actualización Completa","El BioSitio "+ this.title+" fue actualizado correctamente!");
+        this.route.navigate(['folder/'+this.type]);
+        this.back()
+    }).catch(err => this.showAlert("Error!", "No se puede Actualizar el Biositio"))
   }
 
   back(){
@@ -92,6 +129,9 @@ async presentToast(message : string ) {
 }
 
  async geoloca(){
+    setTimeout(() =>{
+      document.getElementById("image").setAttribute("src",this.img);
+    }, 200);
     this.geolocation.getCurrentPosition().then((resp) => {
       this.lat = resp.coords.latitude
       this.lng = resp.coords.longitude
@@ -109,6 +149,9 @@ async presentToast(message : string ) {
         icon: 'images-outline',
         handler: () => {
           this.OnGallery()
+          setTimeout(() =>{
+            document.getElementById("image").setAttribute("src",this.img);
+          }, 200);
         }
       },{
         text: 'Tomar Foto',
@@ -116,6 +159,9 @@ async presentToast(message : string ) {
         role: 'update',
         handler: () => {
           this.OnCamera()
+          setTimeout(() =>{
+            document.getElementById("image").setAttribute("src",this.image);
+          }, 200);
         }
       },
        {
@@ -137,6 +183,9 @@ async presentToast(message : string ) {
       this.cameraService.Options(optionCamera).then(img =>{
         this.croppedImage = img.toString();
         const imagen = this.croppedImage;
+        setTimeout(() =>{
+          document.getElementById("image").setAttribute("src",imagen);
+        }, 200);
         this.preUploadIMG(imagen);
       });
     });
@@ -151,27 +200,32 @@ async presentToast(message : string ) {
        this.cameraService.Options(optionGallery).then(img =>{
         this.croppedImage =  img;
         const imagen = this.croppedImage;
+        setTimeout(() =>{
+          document.getElementById("image").setAttribute("src",imagen);
+        }, 200);
         this.preUploadIMG(imagen);
       });
     });
 
-    
-         
   }
 
   preUploadIMG(imagen : string){
-    
-    const ref = this.afStorage.ref(`images/${this.name_img}`);
+    const nameimg = Math.random().toString(36).substring(2);
+    this.name_img = nameimg;
+    const ref = this.afStorage.ref(`images/${nameimg}`);
+    console.log(ref)
     const task =  ref.putString(imagen,"data_url");
     this.percent = task.percentageChanges();
     this.isUploadStart = true;
     this.Progress = true;
+    this.image = imagen
     task.snapshotChanges().pipe(finalize(()=> this.imgUrl = ref.getDownloadURL())).subscribe();
     setTimeout(() =>{
       document.getElementById("image").setAttribute("src",imagen);
       this.Progress = false;
-    }, 250);
+    }, 200);
     this.presentToast("Imagen preparada!");
+
   }
 
   deleteIMG(){

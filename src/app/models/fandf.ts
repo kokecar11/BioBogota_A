@@ -4,4 +4,7 @@ export interface fandfInterface {
     img: string;
     type:string;
     desc: string;    
+    reactions: {}
   }
+
+//Exporta las interfaces de la Fauna y la Flora

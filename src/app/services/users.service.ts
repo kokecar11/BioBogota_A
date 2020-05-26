@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
 
-
+//Servicio para Los Usuarios
 
   constructor(private Firedb : AngularFirestore) { 
   }
 
-
+//Obtiene todos los usuarios en la plataforma
   getUsers(){
     return this.Firedb.collection('Users').snapshotChanges().pipe(map(userss =>{
       return userss.map( a => {
@@ -25,7 +25,7 @@ export class UsersService {
     }))
 
   }
-
+//Obtiene 1 usario.
   getOnceUser( uid : string ){
     return this.Firedb.collection('Users').doc(uid).valueChanges().pipe(take(1),map(user =>{
       const users = user as userInterface;

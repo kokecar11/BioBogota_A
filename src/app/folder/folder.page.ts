@@ -4,11 +4,13 @@ import { ObjectService } from '../services/object.service';
 import { ParksService} from '../services/parks.service';
 import { map } from "rxjs/operators";
 import { ModalController, ActionSheetController } from '@ionic/angular';
-import { FloraComponent } from '../componentes/flora/flora.component';
 import { FandfComponent } from "../componentes/fandf/fandf.component";
 import { FaunaComponent } from '../componentes/fauna/fauna.component';
 import { ParkComponent } from '../componentes/Bioparks/park/park.component';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ReactionsService } from '../services/reactions.service';
+import { UsersService } from '../services/users.service';
+import { userInterface } from '../models/users';
 
 
 
@@ -22,6 +24,9 @@ export class FolderPage implements OnInit {
 
   public parks: any = [];
   position: {lat: number,lng: number};
+  public reactions : number;
+  public AuthUser : any;
+  liked = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,14 +36,19 @@ export class FolderPage implements OnInit {
     public parkService : ParksService,
     private modal : ModalController,
     public actionSheetController: ActionSheetController,
+    private reactionService : ReactionsService,
+    private userService : UsersService,
     ) { }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
     this.parkService.getParks().subscribe(parkss => {
-
       this.parks = parkss;
     });
+
+    this.afAuth.user.subscribe(user =>{
+      this.AuthUser = user;
+    })
 
   }
 
@@ -48,12 +58,8 @@ export class FolderPage implements OnInit {
     this.route.navigate(['/park']);
     
   }
-  camara(){
-    this.route.navigate(['/camera']);
-  }
 
   OnFauna (park){
-    console.log(park.fauna)
     this.modal.create({
       component: FaunaComponent,
       componentProps : {
@@ -62,7 +68,6 @@ export class FolderPage implements OnInit {
         type_f : "Fauna"
       }
     }).then((modal) => modal.present())
-
   }
 
   OnFlora (park){
@@ -76,8 +81,29 @@ export class FolderPage implements OnInit {
     }).then((modal) => modal.present())
 
   }
-  OnLike (){
-    console.log("Like a este biositio")
+  OnLike(park, isLike: boolean){
+    
+    
+    if(isLike ){
+      this.afAuth.user.subscribe(res => {
+        this.userService.getOnceUser(res.uid).subscribe(users =>{
+           users;
+           this.liked = false;
+           this.reactionService.addLike2(park.id, users.uid)
+        });
+      }); 
+      
+    }else{
+      this.afAuth.user.subscribe(res => {
+        this.userService.getOnceUser(res.uid).subscribe(users =>{
+           users;
+           this.liked = true;
+            this.reactionService.deleteLike(park.id, users.uid)
+        });
+      }); 
+      
+    }
+
   }
 
   OnCreatePark(){
@@ -97,29 +123,15 @@ export class FolderPage implements OnInit {
 
   }
 
-  OnCreateFlora(){
-    
-  }
-
-
   async presentActionSheet(idPark : string) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Acciones',
       buttons: [{
-        text: 'Agregar un Animal al BioSitio',
+        text: 'Agregar un animal o planta al Biositio',
         role: 'destructive',
-        icon: 'paw',
+        icon: 'add',
         handler: () => {
-          this.OnCreateFauna(idPark)
-          console.log('Agregar animal en el Biositio:', idPark );
-          
-        }
-      },{
-        text: 'Agregar una Planta al BioSitio',
-        icon: 'rose',
-        role: 'update',
-        handler: () => {
-          console.log('Agregar animal en el Biositio:', idPark);
+          this.OnCreateFauna(idPark)          
         }
       },
        {
@@ -127,7 +139,7 @@ export class FolderPage implements OnInit {
         icon: 'close',
         role: 'cancel',
         handler: () => {
-          console.log('Cancel clicked');
+           actionSheet.dismiss();
         }
       }]
     });

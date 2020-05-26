@@ -66,7 +66,8 @@ export class LoginPage implements OnInit {
     this.FireDB.collection('Users').doc(res.user.uid).set({
       name : res.user.displayName ,
       uid : res.user.uid,
-      email : res.user.email
+      email : res.user.email,
+      img_profile : res.user.photoURL
     });
   }
 
