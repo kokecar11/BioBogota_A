@@ -14,12 +14,8 @@ const routes: Routes = [
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
-    path: 'park',
+    path: 'park',canActivate : [AuthGuard] ,
     loadChildren: () => import('./park/park.module').then( m => m.ParkPageModule)
-  },
-  {
-    path: 'camera',
-    loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule)
   },
   {
     path: 'login',canActivate : [NologinGuard] ,

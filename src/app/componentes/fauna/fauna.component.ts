@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { ReactionsService } from 'src/app/services/reactions.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { FandfComponent } from '../fandf/fandf.component';
 
 @Component({
   selector: "app-fauna",
@@ -21,7 +22,8 @@ export class FaunaComponent implements OnInit {
     private reactionService : ReactionsService,
     private userService : UsersService,
     private afAuth : AngularFireAuth,
-    private actionSheetController:ActionSheetController  ) {}
+    private actionSheetController:ActionSheetController,
+    private modal2: ModalController,  ) {}
 
   title: string;
   idPark: string;
@@ -43,22 +45,15 @@ export class FaunaComponent implements OnInit {
     });
   }
 
-  async OnOptionsUser(Parkid : string) {
+  async OnOptionsUser(Id_F : string) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Acciones',
       buttons: [{
-        text: 'Editar',
-        role: 'update',
-        icon: 'pencil',
-        handler: () => {
-        
-        }
-      },{
         text: 'Eliminar',
         icon: 'trash',
         role: 'destructive',
         handler: () => {
-          this.OnDeleteFanF(Parkid)
+          this.OnDeleteFanF(Id_F)
         }
       },
        {
@@ -86,7 +81,6 @@ export class FaunaComponent implements OnInit {
   }
   OnLike(fauna, isLike: boolean){
     
-    
     if(isLike ){
       this.afAuth.user.subscribe(res => {
         this.userService.getOnceUser(res.uid).subscribe(users =>{
@@ -109,8 +103,26 @@ export class FaunaComponent implements OnInit {
 
   }
 
-  OnDeleteFanF(Parkid : string){
-    this.fandfService.deleteFandF(this.idPark,Parkid, this.type_f);
+  OnUpdateFanF(Id_F : string){ 
+
+    this.fandfService.getOneFandF(this.idPark,Id_F,this.type_f).subscribe(F =>{
+
+      this.modal2.create({ //Crea un modal con el componente ParkComponent e inserta los datos
+        component: FandfComponent,
+        componentProps : {
+          id_F : F,
+          IsUpdate : true,
+          Type : this.type_f
+        }
+      }).then((modal2) => modal2.present())
+        
+    });
+
+  }
+
+
+  OnDeleteFanF(Id_F : string){
+    this.fandfService.deleteFandF(this.idPark, Id_F, this.type_f);
 
   }
 }

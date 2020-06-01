@@ -12,6 +12,7 @@ import { CameraService } from 'src/app/services/camera.service';
 import { finalize } from 'rxjs/operators';
 
 
+
 @Component({
   selector: 'app-fandf',
   templateUrl: './fandf.component.html',
@@ -29,6 +30,10 @@ export class FandfComponent implements OnInit {
   name_img = Math.random().toString(36).substring(2);
 
   public user : userInterface;
+
+  id_F : any 
+  IsUpdate : boolean
+  Type : string
 
   croppedImage : string;
   percent;
@@ -52,8 +57,33 @@ export class FandfComponent implements OnInit {
   id_Park : string;
   ngOnInit() {
     this.id_Park = this.navparams.get("id_Park");
+    this.id_F = this.navparams.get("id_F");
+    this.IsUpdate = this.navparams.get("IsUpdate");
+    this.Type = this.navparams.get("Type");
+
+    if(this.IsUpdate){
+      this.OnGetFandF()
+    }
   
   }
+
+  OnGetFandF (){
+    this.isUploadStart = true;
+    this.name = this.id_F.name;
+    this.desc = this.id_F.desc;
+    this.type_f = this.id_F.type_f;
+    this.lat = this.id_F.position.lat
+    this.lng = this.id_F.position.lng
+    this.name_img = this.id_F.name_img
+
+    setTimeout(() =>{
+      document.getElementById("image").setAttribute("src",this.id_F.img);
+      this.Progress = false;
+      }, 250);
+
+
+  }
+
 
   OnSaveFandF(uid : string){
     this.userService.getOnceUser(uid).subscribe(users =>{
@@ -187,7 +217,15 @@ export class FandfComponent implements OnInit {
     }, 250);
     this.presentToast("Imagen preparada!");
   }
-
+  
+  OnUpdateFandF(){
+    console.log(this.id_Park, this.Type ,this.id_F.id,this.name,this.img, this.lat,this.lng,this.type_f,this.desc,this.name_img)
+    this.fandfService.updateFandF(this.id_Park, this.Type ,this.id_F.id,this.name,this.img, this.lat,this.lng,this.type_f,this.desc,this.name_img).then(res =>{
+      this.showAlert("Actualización Completa","El BioSitio "+ this.name+" fue actualizado correctamente!");
+        this.route.navigate(['folder/'+this.type_f]);
+        this.back()
+    }).catch(err => this.showAlert("Error!", "No se puede Actualizar el Biositio"))
+  }
   
   deleteIMG(){
 

@@ -52,9 +52,15 @@
    
     
     <div class="centrado">
-      <ion-button (click)="OnSaveFandF(user.uid)" size="default" color="success" mode="ios">Guardar</ion-button>
-      <ion-button (click)="OnCancel()" size="default" color="danger" mode="ios">Cancelar</ion-button>
-
+      <div *ngIf="id_F== null">
+        <ion-button (click)="OnSaveFandF(user.uid)" size="default" color="success" mode="ios">Guardar</ion-button>
+        <ion-button (click)="OnCancel()" size="default" color="danger" mode="ios">Cancelar</ion-button>
+      </div>
+      
+      <div *ngIf="id_F" >
+        <ion-button (click)="OnUpdateFandF()" size="default" color="secondary" mode="ios">Actualizar</ion-button>
+        <ion-button (click)="OnCancel()" size="default" color="danger" mode="ios">Cancelar</ion-button>
+      </div>
     </div>
    
     
